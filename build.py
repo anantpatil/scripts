@@ -1,0 +1,48 @@
+#!/usr/bin/env python2.7
+
+""" 
+A script to build a maven module along with its dependencies. A
+dependency graph is created and precedence is computed and build is
+fired in the prcedence order.
+
+    Usage:
+    $ build.py module-1 // build module-1 along with dependencies
+    $ build.py module-2 module-1 // build both along with dependencies
+    $ build.py // build current module (project)
+
+Algorithm:
+1. Read the main pom file and build the universal set of modules for the
+   project. Build a DG.
+2. Make sure the DG is DAG. Print cycles found, if any. 
+3. Read the pom file of module and get the dependent modules. Using the
+   list from (1)  build the dependency graph. Find any cycles etc.
+3. Fire the build in post-order DFS traversal.
+
+Data structures:
+A Symbol table for storing module vs vertex number.
+Adjacency list for Directed graph.
+
+Style:
+Comletely test-driven.
+
+TODO:
+Add ability to fire parallel build. Take number of threads to be used as
+an argument to program.
+
+    $ build.py module-1 --parallel --thread-count 4
+
+"""
+
+
+#-----------------------------------------------------------------------
+import os 
+import unittest
+#-----------------------------------------------------------------------
+
+
+	
+#=======================================================================
+#	Entry Point
+#=======================================================================
+if __name__ == '__main__':
+    unittest.main()
