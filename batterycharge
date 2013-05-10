@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Output the percentage of battery remaining or charging.
+# If battery is discharging, shows ~x%. else shows ^x%.
+acpi=`acpi`
+val=""
+echo $acpi | grep Discharging > /dev/null
+if [ $? -ne 0 ];
+then
+    val="^" #Battery charging...
+fi
+status=`echo $acpi | cut -d, -f 2 | sed 's/^ *//g'`
+echo $val $status

@@ -39,10 +39,79 @@ import os
 import unittest
 #-----------------------------------------------------------------------
 
+all_modules = [] # all the modules in project
+build_modules = [] # modules to be built
 
-	
+def build():
+    """
+	Check ags.
+	Read the module name(s): build_modules.
+	Read the main POM file and get all the modules in project:
+	all_modules
+	Add all the modules in SDGBuilder.
+	q.enque(build_modules)
+	while(!isEmpty(q)):
+	    m = q.delete()
+	    for d in dep(m):
+		SDGBuilder.addEdge(m, d)
+		q.enque(d)
+    """
+    pass
+
+def determine_build_order():
+    """
+	Determine the build order.
+    """
+    pass
+
+def fire_build(module):
+    """
+	Fire Maven build for the module.
+    """
+    pass
+
+
+
+def build_dep_graph():
+    """
+	Build the DG using SDG.
+    """
+    pass
+
+def dep(stream, module):
+    """
+	Return list of dependencies for given module.
+	Read POM file of m and get the dependencies.
+	All modules matching names from the all_modules.
+    """
+    pass
+
+def read_all_modules(stream):
+    """
+	Read all the modules from POM file. The given POM file should be
+	MAIN POM file of project.
+    """
+    pass
+
 #=======================================================================
 #	Entry Point
 #=======================================================================
+def test_read_all_modules():
+    # Create a MAIN POM file and see if modules are read.
+    pass
+
+def test_dep():
+    # create a fake POM XML and make sure dependencies are listed.
+    pass
+
+def test_build_dep_graph():
+    # Test the dependency graph.
+    pass
+
+def test_build_order():
+    # Check the order of build determined by the alogrithm
+    pass
+
+
 if __name__ == '__main__':
     unittest.main()

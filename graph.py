@@ -172,20 +172,25 @@ class SDG:
 class SDGBuilder:
     """
 	A class to build SDG.
+	Keep a adjacency list and add symbol names and edges to it.
+	When "build" is called, just initiate a SDG with all the data
+	you have.
     """
     def __init__(self):
-	g = SDG()
+	self.__sym = []
+	self.__adj = dict()
 
     def addSymbol(self, symbol):
-	g.addName(symbol)
+	self.__sym.append(symbol)
     
     def addAllSymbols(self, symbols):
 	for sym in symbols:
-	    g.addName(sym)
+	    if symbol not in self.__sym:
+		self.__sym.add(symbol)
 
     def addEdge(self, src, dest):
-	g.addEdge(src, dest)
-    
+	self.__adj[src].append(dest) 
+
 #=======================================================================
 #	Unit tets
 #=======================================================================

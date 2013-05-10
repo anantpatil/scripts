@@ -1,0 +1,8 @@
+#!/bin/sh
+BACKUPFILENAME=backup.$(date +%Y%m%d%H%M).tar.gz
+touch ~/$BACKUPFILENAME
+time tar -vcpzf ~/$BACKUPFILENAME ~/.thunderbird ~/.tmux.conf ~/.vimrc ~/.vim ~/.task ~/.taskrc ~/.ideas.txt ~/.vimperator ~/.bashrc ~/.zshrc ~/.subversion \
+~/Documents/personal/*.txt* \
+~/Documents/personal/BankTx ~/Documents/personal/scanned \
+~/Documents/personal/Finance ~/Documents/personal/billsandreceipts \
+~/Documents/*.txt* ~/karma/private
