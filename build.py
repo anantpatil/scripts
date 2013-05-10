@@ -44,17 +44,11 @@ build_modules = [] # modules to be built
 
 def build():
     """
-	Check ags.
+	Check args.
 	Read the module name(s): build_modules.
 	Read the main POM file and get all the modules in project:
 	all_modules
 	Add all the modules in SDGBuilder.
-	q.enque(build_modules)
-	while(!isEmpty(q)):
-	    m = q.delete()
-	    for d in dep(m):
-		SDGBuilder.addEdge(m, d)
-		q.enque(d)
     """
     pass
 
@@ -70,12 +64,21 @@ def fire_build(module):
     """
     pass
 
-
-
 def build_dep_graph():
     """
 	Build the DG using SDG.
+	marked = []
+	for items in build_modules:
+	    marked.append(key)
+	q.enque(build_modules)
+	while(!isEmpty(q)):
+	    m = q.delete()
+	    for d in dep(m):
+		SDGBuilder.addEdge(m, d)
+		if d not in marked:
+		    q.enque(d)
     """
+    
     pass
 
 def dep(stream, module):

@@ -2,34 +2,10 @@
 """
     A module for Graph implementations.
     DG = Directed Graph.
-    UG = Undirected Graph.
-    SG = Symbol Graph.
+    UG = Un-directed Graph.
+    SUG = Symbolic Un-directed Graph.
+    SDG = Symbolic Directed Graph.
     
-    Undirected Graph
-    ----
-    Path, reachability: Is a vertex reachable from a given vertex.
-    Shortest Path: Single source shortest path. What's the shortest path
-    from v to w. Shortest path from multiple sources.
-    Cycle: Is there a cycle in Grpah? Print all the cycles.
-    Connectivity, connected components: How many connected components?
-    Are v and w in same CC.
-    Bipartite (2 colorability): Is the Graph two colorable?
-    
-    Directed Graph
-    ----
-    Path, reachability
-    Shortest Path: Single source and multiple sources
-    Cycle: Detect and print all cycles.
-    Ordered Traversal
-    Euler Path
-    Hamilton Path
-    Topological sort
-    Strong connectivity
-    Transitive closure for connectivity 
-
-    Directed Graph: DFS, BFS, Ordered Traversal, Strong Connectivity,
-    Euler Path, Hamilton Path, Topology Sorting, Transitive Closure
-
 """
 
 #-----------------------------------------------------------------------
@@ -39,6 +15,23 @@ import unittest
 #=======================================================================
 #	Undirected Graph
 #=======================================================================
+
+"""
+    Following problems are solved for un-directed graphs:
+    ----
+    a. Path & Reachability: Is a vertex reachable from a given vertex.
+
+    b. Shortest Path: Single source shortest path. What's the shortest path
+       from v to w. Shortest path from multiple sources.
+
+    c. Cycle: Is there a cycle in Grpah? Print all the cycles.
+
+    d. Connectivity, connected components: How many connected components?
+       Are v and w in same CC.
+
+    e. Bipartite (2 colorability): Is the Graph two colorable?
+"""
+    
 class UG:
     """
 	An implementation of un-directed graph.
@@ -82,9 +75,31 @@ class UG:
 	    for w in self.adj(v):
 		print str(v) + " - " + str(w)
 
+
+class UGConnectedComponents:
+    """
+	Gives connected components of UG.
+    """
+    pass
+
 #=======================================================================
 #	Directed Graph
 #=======================================================================
+
+"""
+    Following problems are solved for Directed Graph
+    ----
+    a. Path, reachability
+    b. Shortest Path: Single source and multiple sources
+    c. Cycle: Detect and print all cycles.
+    d. Ordered Traversal
+    e. Euler Path
+    f. Hamilton Path
+    g. Topological sort
+    h. Strong connectivity
+    i. Transitive closure for connectivity 
+"""
+
 class DG:
     """
 	An implementation of directed graph.
@@ -138,6 +153,80 @@ class DG:
 	    for w in self.adj(v):
 		print str(v) + " -> " + str(w)
 
+
+class DGRechability:
+    """
+	Determines if a vertex is reachable from a given vertex.
+	If reachable, then gives the path, not necessarily shortest
+	path.
+    """
+    pass
+
+
+class DGShortestPath:
+    """
+	Gives shotest path from single source or multiple source.
+	Uses BFS.
+    """
+    pass
+
+
+class DGOrderedTraversal:
+    """
+	Provides APIs for ordered traversal.
+	Post-order.
+	Pre-order.
+	Reverse Post-order.
+    """
+    pass
+
+
+class DGHamiltonianPath:
+    """
+	Gives Hamiltonian path for the graph.
+    """
+    pass
+
+
+class DGCycles:
+    """
+	Detects if the DG has cycles.
+	Gives list of all the cycles in the graph.
+    """
+    pass
+
+
+class DGBipartite:
+    """
+	Detects if the graph is bipartite.
+    """
+    pass
+
+
+class DGEulerPath:
+    """
+	Gives Euler path.
+    """
+    pass
+
+
+class DGStrongConnectivity:
+    """
+	Gives all the strongly connected components in DG.
+	Determines if two vertices are strongly connected.
+	Uses Kosraju algorithm.
+    """
+    pass
+
+
+class DGTransitiveClosure:
+    """
+	Transitive closure of DG.
+	Used to determine is a pair of vertices are connected (not
+	strongly though. Maintains a VxV matrix of boolean values to
+	support O(1) query for whether two vertices are connected. 
+    """
+    pass
 #=======================================================================
 #	Symbol Directed Graph
 #=======================================================================
@@ -146,28 +235,25 @@ class SDG:
 	A symbol graph for refering to module names and graph vertex
 	index.
     """
-    def __init__(self):
-	self.nameToIdxMap = dict()
-	self.idxToNameMap = dict()
-	self.count = 0 # keep track of next vertex number in graph
-
-    def add_name(self, name):
-	if name not in self.nameToIdxMap:
-	    self.nameToIdxMap[name] = self.count
-	    self.idxToNameMap[self.count] = name
-	    self.count += 1
+    def __init__(self, name_vs_idx, idx_vs_name, dg):
+	self.__name_vs_idx = nameToIdxMap
+	self.__idx_vs_name = idxToNameMap
+	self.__dg = dg
 
     def size(self):
-	return self.count;
+	return len(self.__nameToIdxMap)
 
-    def names(self):
-	return self.nameToIdxMap.keys()
+    def all_names(self):
+	return self.__name_vs_idx.keys()
 
     def get_name(self, idx):
-	return self.idxToNameMap[idx];
+	return self.__idx_vs_name[idx];
 
     def get_idx(self, name):
-	return self.nameToIdxMap[name] 
+	return self.__name_vs_idx[name] 
+
+    def get_dg(self):
+	return self.__dg
 
 class SDGBuilder:
     """
@@ -190,6 +276,11 @@ class SDGBuilder:
 
     def addEdge(self, src, dest):
 	self.__adj[src].append(dest) 
+
+    def build(self):
+	sg = SDG()
+	for sym in self.__sym:
+	    sg.add_name(sym) 
 
 #=======================================================================
 #	Unit tets
