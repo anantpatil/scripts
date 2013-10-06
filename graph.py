@@ -24,7 +24,7 @@ import unittest
     b. Shortest Path: Single source shortest path. What's the shortest path
        from v to w. Shortest path from multiple sources.
 
-    c. Cycle: Is there a cycle in Grpah? Print all the cycles.
+    c. Cycle: Is there a cycle in Graph? Print all the cycles.
 
     d. Connectivity, connected components: How many connected components?
        Are v and w in same CC.
@@ -311,7 +311,13 @@ class DGTestCase(unittest.TestCase):
 
 class DSGTestCase(unittest.TestCase):
     def test_add_name(self):
-	symGraph = SDG()
+	idx_vs_name = {1:"one", 2:"two", 3:"three"}
+	name_vs_idx = {"one":1, "two":2, "three":3}
+	g = DG(3)
+	g.addEdge(1,2)
+	g.addEdge(2,3)
+	g.addEdge(3,1)
+	symGraph = SDG(idx_vs_name, name_vs_idx, g)
 	self.assertEquals(0, symGraph.size())
         symGraph.add_name("module-1");
 	self.assertTrue("module-1" in symGraph.names())
