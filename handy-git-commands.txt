@@ -1,0 +1,51 @@
+Basic
+----
+
+# configuration as in current(local) repo's .git/config file
+git config --list
+
+# configuration as in ~/.gitconfig file
+git config --global --list
+
+# show the status
+git status
+
+# commit all changes
+git commit -a -m "commit message"
+
+# index the files, add to trackable; stage files
+git add <file/folder>
+
+# show changes from the staging area
+git diff --cached
+
+Distributed repos
+----
+
+# Status of remote repo named as origin
+git remote show origin
+
+#incoming changes
+git fetch && git log ..origin/master 
+
+#outgoing changes
+git fetch && git log origin/master..
+
+# push changes to remote repo oigin
+git push origin master
+
+# same as above for a URL
+git push https://github.com/anantpatil/scripts.git master
+
+# merge changes fom remote repo origin
+git merge origin/master
+
+# pull changes from remote repo origin
+git pull . remotes/origin/master
+
+# clone the remote repo in my-repo-name
+git clone https://github.com/anantpatil/scripts.git my-repo-name
+
+# add remote URL as origin
+git remote add origin https://github.com/anantpatil/scripts.git
+
