@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Output colored text
+# Color the contents of working copy green and old copy red.
+svn diff $* | sed -e 's/^+/\x1b\[32m+/;s/^-/\x1b[31m-/;s/$/\x1b[0m/';

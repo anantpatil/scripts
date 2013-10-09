@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Author: Anant Patil (ananta.v.patil@gmail.com)
+#
+# Make a list of all the modified files in local subversion repository
+# in current directory. Cycle throuh all the files and ask if you want
+# to see the diff. 
+#
+# Uses svnvimdiff command created by Geoff Buchan which can be found at 
+# https://github.com/vim-scripts/svnvimdiff/blob/master/svnvimdiff
+# 
+
+svn st					|
+    grep "^M"				|
+	cut -c9- 			|
+	    while read file;
+	    do 
+		echo -ne "View diff of $file? (y/n)\n"
+		# -s option for echo off
+		# read from stdin otherwise reads from the file in
+		# loop i.e. gets the new line from file in i 
+		read -s -n 1 answer <&1
+		case $answer in
+		    # seperate gvimdiffrc so that gvim is launched in
+		    # full screen mode.
+		    [Yy] )  svnvimdiff -g $file
+				;;
+		    *    ) 	;;
+		esac
+	    done
+

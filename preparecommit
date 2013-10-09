@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+# A script to select added/modified files from working copy and commit
+# them. Before commiting, takes the comments as well.
+
+# TODO: Commit to svn repository? May be not, just to review and commit
+# later whenever you want.
+
+commit_script=.commit.sh
+comments_file=.comments.txt
+
+commit_script_bk=.commit.sh.bk
+comments_file_bk=.comments.txt.bk
+
+if [ -e "$commit_script" ];
+then
+    mv "$commit_script" "$commit_script_bk"
+fi
+
+if [ -e "$comments_file" ];
+then
+    mv "$comments_file" "$comments_file_bk"
+fi
+
+touch "$commit_script"
+touch "$comments_file"
+
+svn st 				|
+    grep "^[M|A|D]"		|
+	cut -c9-		|
+	    while read file
+	    do
+		echo -ne "Include file $file? (y/n)\n"
+		read -s -n 1 answer <&1
+		case $answer in
+		[Yy]	) echo "$file " >> .commit.sh
+				;;
+		*	)   	;;
+		esac
+	    done
+
+if [ ! -s $commit_script ]
+then
+    # file is empty
+    echo "No file(s) to commit."
+    rm "$commit_script"
+    exit 
+fi
+
+# make it executable
+chmod 744 "$commit_script"
+
+echo -e "\nStage following files for commit? (y/n)\n"
+cat $commit_script
+echo ""
+read -s -n 1 answer <&1
+if [ "$answer" = "y" -o "$answer" = "Y" ]
+then
+
+    # Prepare comments file
+    echo -e "\t----" >> "$comments_file"
+    while read file
+    do
+	echo -e "\t$file" >> "$comments_file"
+    done < "$commit_script"
+    echo -e "\t----" >> "$comments_file"
+
+    # Prepare commit script
+    # add svn commit command with comments file
+    sed -i '1i svn commit -F .comments.txt ' "$commit_script"
+    tmp_file="/tmp/.commit.tmp"
+    # Join lines to form a single line - a command to be executed
+    paste -s -d " " "$commit_script" >| "$tmp_file"
+    mv "$tmp_file" "$commit_script"
+    # echo -e "Prepared commit file $commit_script \n"
+    # Launch for user to enter comments.
+    vim "$comments_file"
+    # Execute the commit script.
+    # exec "$commit_script"
+    # Don't remove the files, let them be there for reference
+else
+    #echo "Ok, as you wish. No file was prepared."
+    rm "$commit_script"
+    rm "$comments_file"
+fi
