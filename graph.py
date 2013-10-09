@@ -235,13 +235,13 @@ class SDG:
 	A symbol graph for refering to module names and graph vertex
 	index.
     """
-    def __init__(self, name_vs_idx, idx_vs_name, dg):
+    def __init__(self, nameToIdxMap, idxToNameMap, dg):
 	self.__name_vs_idx = nameToIdxMap
 	self.__idx_vs_name = idxToNameMap
 	self.__dg = dg
 
     def size(self):
-	return len(self.__nameToIdxMap)
+	return len(self.__name_vs_idx)
 
     def all_names(self):
 	return self.__name_vs_idx.keys()
@@ -311,18 +311,17 @@ class DGTestCase(unittest.TestCase):
 
 class DSGTestCase(unittest.TestCase):
     def test_add_name(self):
-	idx_vs_name = {1:"one", 2:"two", 3:"three"}
-	name_vs_idx = {"one":1, "two":2, "three":3}
+	idx_vs_name = {0:"one", 1:"two", 2:"three"}
+	name_vs_idx = {"one":0, "two":1, "three":2}
 	g = DG(3)
+	g.addEdge(0,1)
 	g.addEdge(1,2)
-	g.addEdge(2,3)
-	g.addEdge(3,1)
+	g.addEdge(2,0)
 	symGraph = SDG(idx_vs_name, name_vs_idx, g)
-	self.assertEquals(0, symGraph.size())
+	self.assertEquals(3, symGraph.size())
         symGraph.add_name("module-1");
 	self.assertTrue("module-1" in symGraph.names())
-	self.assertEquals(1, symGraph.size())
-	self.assertEquals(0, symGraph.get_idx("module-1"))
+	self.assertEquals(4, symGraph.size())
 
 #=======================================================================
 #	Run Tests

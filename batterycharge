@@ -3,7 +3,7 @@
 # Output the percentage of battery remaining or charging.
 # If battery is discharging, shows ~x%. else shows ^x%.
 acpi=`acpi`
-val=""
+val="~"
 echo $acpi | grep Discharging > /dev/null
 if [ $? -ne 0 ];
 then
